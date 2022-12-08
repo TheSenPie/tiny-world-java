@@ -5,17 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8a84fa3c-87a0-4dcd-9e5d-66081ef5f1f7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/am/aua/entities/Camera.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/am/aua/entities/Light.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/am/aua/game/ApplicationListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/am/aua/game/Game.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/am/aua/rendererEngine/Window.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/am/aua/shaders/ShaderProgram.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/am/aua/shaders/StaticShader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/am/aua/utils/Maths.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/am/aua/utils/Time.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/grass.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/shaders/shader.vs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/shaders/terrain.fs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/shaders/terrain.vs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/am/aua/models/Entity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/am/aua/models/RawModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/am/aua/models/TexturedModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/am/aua/rendererEngine/EntityRenderer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/am/aua/rendererEngine/Loader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/am/aua/rendererEngine/Renderer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/am/aua/rendererEngine/TerrainRenderer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/am/aua/shaders/TerrainShader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/am/aua/terrains/Terrain.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/am/aua/textures/Texture.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/am/aua/Shader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/shaders/shader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/shaders/shader.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/am/aua/entities/Light.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/am/aua/entities/Light.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/am/aua/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/am/aua/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/am/aua/rendererEngine/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/am/aua/rendererEngine/Window.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/am/aua/shaders/ShaderProgram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/am/aua/shaders/ShaderProgram.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/am/aua/shaders/StaticShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/am/aua/shaders/StaticShader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/am/aua/utils/Maths.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/am/aua/utils/Maths.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,10 +52,23 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2IchF5Fd9Smh6T75jAUPrnQsI3b" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "last_opened_file_path": "/home/senpie/Documents/projects/java/tiny-world-java/src/assets/images"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/assets/images" />
+    </key>
   </component>
   <component name="RunManager" selected="Application.Game">
     <configuration name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -102,13 +126,16 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/am/aua/rendererEngine/Window.java</url>
-          <line>138</line>
-          <option name="timeStamp" value="2" />
+          <url>file://$PROJECT_DIR$/src/main/java/am/aua/rendererEngine/Loader.java</url>
+          <line>54</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

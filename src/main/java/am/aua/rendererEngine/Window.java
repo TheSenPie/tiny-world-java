@@ -6,6 +6,7 @@ import am.aua.utils.Time;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.lwjgl.glfw.*;
+import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryStack;
 
 import java.nio.IntBuffer;
@@ -104,12 +105,24 @@ public class Window {
     }
 
     private static void init () {
+        // This line is critical for LWJGL's interoperation with GLFW's
+        // OpenGL context, or any context that is managed externally.
+        // LWJGL detects the context that is current in the current thread,
+        // creates the GLCapabilities instance and makes the OpenGL
+        // bindings available for use.
+        GL.createCapabilities();
+
         game.create();
     }
 
     private static void update () {
         buttonArrayUpdate(GLFW_MOUSE_BUTTON_LAST, Mouse.buttons);
         buttonArrayUpdate(GLFW_KEY_LAST, Keyboard.keys);
+
+        if (Keyboard.isKeyDown(GLFW.GLFW_KEY_ESCAPE)) {
+            glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
+        }
+
         game.update();
 
         // reset update delta
@@ -169,6 +182,14 @@ public class Window {
 
     public static boolean mouseGetGrabbed () {
         return glfwGetInputMode(window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED;
+    }
+
+    public static float getWidth() {
+        return size.x;
+    }
+
+    public static float getHeight() {
+        return size.y;
     }
 
     public static class Button {

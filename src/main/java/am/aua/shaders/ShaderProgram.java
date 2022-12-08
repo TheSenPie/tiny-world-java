@@ -116,7 +116,11 @@ public abstract class ShaderProgram {
         GL20.glGetShaderiv(shaderID, GL20.GL_COMPILE_STATUS, success);
         if (success[0] == 0) {
             String infoLog = GL20.glGetShaderInfoLog(shaderID, 512);
-            System.out.println("ERROR::SHADER::VERTEX::COMPILATION_FAILED\\n" + infoLog + "\n");
+            if (type ==  GL20.GL_VERTEX_SHADER) {
+                System.out.println("ERROR::SHADER::VERTEX::COMPILATION_FAILED\\n" + infoLog + "\n");
+            } else if (type == GL20.GL_FRAGMENT_SHADER) {
+                System.out.println("ERROR::SHADER::FRAG::COMPILATION_FAILED\\n" + infoLog + "\n");
+            }
         }
         return shaderID;
     }

@@ -20,4 +20,15 @@ public class Maths {
         viewMatrix.translate(negativeCameraPos);
         return viewMatrix;
     }
+
+    public static Matrix4f createModelMatrix(Vector3f translation, float rx, float ry, float rz, float scale) {
+        Matrix4f matrix = new Matrix4f();
+        matrix.identity();
+        matrix.translate(translation);
+        matrix.rotate((float) Math.toRadians(rx), new Vector3f(1,0,0));
+        matrix.rotate((float) Math.toRadians(ry), new Vector3f(0,1,0));
+        matrix.rotate((float) Math.toRadians(rz), new Vector3f(0,0,1));
+        matrix.scale(new Vector3f(scale,scale,scale));
+        return matrix;
+    }
 }
