@@ -226,6 +226,10 @@ public class Window {
         public Vector2f getDelta() {
             return delta;
         }
+
+        public boolean isKeyDown (int button) {
+            return buttons[button].down;
+        }
     }
 
     public static class Keyboard {

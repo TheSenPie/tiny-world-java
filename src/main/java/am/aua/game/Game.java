@@ -14,8 +14,8 @@ import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 
 import static am.aua.rendererEngine.Window.Keyboard;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_T;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowShouldClose;
+import static am.aua.rendererEngine.Window.Mouse;
+import static org.lwjgl.glfw.GLFW.*;
 
 public class Game implements ApplicationListener {
     private Renderer renderer;
@@ -38,35 +38,44 @@ public class Game implements ApplicationListener {
         terrain = new Terrain(0,0, loader, new Texture(loader.loadTexture("grass.png")));
 
         float[] vertices = {
-                -0.5f,0.5f,0,
-                -0.5f,-0.5f,0,
-                0.5f,-0.5f,0,
-                0.5f,0.5f,0,
+                .5f, .5f, .5f,
+                -.5f, .5f, .5f,
+                -.5f,-.5f, .5f,
+                .5f,-.5f, .5f,
+                // v0,v1,v2,v3 (front)
 
-                -0.5f,0.5f,1,
-                -0.5f,-0.5f,1,
-                0.5f,-0.5f,1,
-                0.5f,0.5f,1,
+                .5f, .5f, .5f,
+                .5f,-.5f, .5f,
+                .5f,-.5f,-.5f,
+                .5f, .5f,-.5f,
+                // v0,v3,v4,v5 (right)
 
-                0.5f,0.5f,0,
-                0.5f,-0.5f,0,
-                0.5f,-0.5f,1,
-                0.5f,0.5f,1,
+                .5f, .5f, .5f,
+                .5f, .5f,-.5f,
+                -.5f, .5f,-.5f,
+                -.5f, .5f, .5f,
+                // v0,v5,v6,v1 (top)
 
-                -0.5f,0.5f,0,
-                -0.5f,-0.5f,0,
-                -0.5f,-0.5f,1,
-                -0.5f,0.5f,1,
+                // position
+                -.5f, .5f, .5f,
+                -.5f, .5f,-.5f,
+                -.5f,-.5f,-.5f,
+                -.5f,-.5f, .5f,
+                // v1,v6,v7,v2 (left)
 
-                -0.5f,0.5f,1,
-                -0.5f,0.5f,0,
-                0.5f,0.5f,0,
-                0.5f,0.5f,1,
+                // position
+                -.5f,-.5f,-.5f,
+                .5f,-.5f,-.5f,
+                .5f,-.5f, .5f,
+                -.5f,-.5f, .5f,
+                // v7,v4,v3,v2 (bottom)
 
-                -0.5f,-0.5f,1,
-                -0.5f,-0.5f,0,
-                0.5f,-0.5f,0,
-                0.5f,-0.5f,1
+                // position
+                .5f,-.5f,-.5f,
+                -.5f,-.5f,-.5f,
+                -.5f, .5f,-.5f,
+                .5f, .5f,-.5f,
+                // v4,v7,v6,v5 (back)
         };
 
         float[] textureCoords = {
@@ -97,27 +106,55 @@ public class Game implements ApplicationListener {
         };
 
         float[] normals = {
-                0, 0, -1,
+                // normal
                 0, 0, 1,
-                0, 1, 0,
-                0, -1, 0,
+                0, 0, 1,
+                0, 0, 1,
+                0, 0, 1,
+                // v0,v1,v2,v3 (front)
+
+                // normal
                 1, 0, 0,
+                1, 0, 0,
+                1, 0, 0,
+                // v0,v3,v4,v5 (right)
+
+                // normal
+                0, 1, 0,
+                0, 1, 0,
+                0, 1, 0,
+                0, 1, 0,
+                // v0,v5,v6,v1 (top)
+
+                // normal
                 -1, 0, 0,
+                -1, 0, 0,
+                -1, 0, 0,
+                -1, 0, 0,
+                // v1,v6,v7,v2 (left)
+
+                // normal
+                0,-1, 0,
+                0,-1, 0,
+                0,-1, 0,
+                0,-1, 0,
+                // v7,v4,v3,v2 (bottom)
+
+                // normal
+                0, 0,-1,
+                0, 0,-1,
+                0, 0,-1,
+                0, 0,-1,
+                // v4,v7,v6,v5 (back)
         };
 
         int[] indices = {
-                0,1,3,
-                3,1,2,
-                4,5,7,
-                7,5,6,
-                8,9,11,
-                11,9,10,
-                12,13,15,
-                15,13,14,
-                16,17,19,
-                19,17,18,
-                20,21,23,
-                23,21,22
+                0, 1, 2,   2, 3, 0,    // v0-v1-v2, v2-v3-v0 (front)
+                4, 5, 6,   6, 7, 4,    // v0-v3-v4, v4-v5-v0 (right)
+                8, 9,10,  10,11, 8,    // v0-v5-v6, v6-v1-v0 (top)
+                12,13,14,  14,15,12,    // v1-v6-v7, v7-v2-v1 (left)
+                16,17,18,  18,19,16,    // v7-v4-v3, v3-v2-v7 (bottom)
+                20,21,22,  22,23,20     // v4-v7-v6, v6-v5-v4 (back)
         };
 
         RawModel model = loader.loadToVAO(vertices, textureCoords, normals, indices);
@@ -136,6 +173,11 @@ public class Game implements ApplicationListener {
     public void update() {
         if (Keyboard.isKeyDown(GLFW_KEY_T)) {
             renderer.setWireframe(!renderer.isWireframe());
+        }
+
+        if (Mouse.isKeyDown(GLFW_MOUSE_BUTTON_LEFT)) {
+            camera.setYaw(camera.getYaw() - Mouse.getDelta().x * 0.01f);
+            camera.setRoll(camera.getRoll() + Mouse.getDelta().y * 0.01f);
         }
 
         camera.move();
