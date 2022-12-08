@@ -176,8 +176,8 @@ public class Game implements ApplicationListener {
         }
 
         if (Mouse.isKeyDown(GLFW_MOUSE_BUTTON_LEFT)) {
-            camera.setYaw(camera.getYaw() - Mouse.getDelta().x * 0.01f);
-            camera.setRoll(camera.getRoll() + Mouse.getDelta().y * 0.01f);
+            camera.setYaw(camera.getYaw() + Mouse.getDelta().x * 0.1f);
+            camera.setPitch(camera.getPitch() + Mouse.getDelta().y * 0.1f);
         }
 
         camera.move();

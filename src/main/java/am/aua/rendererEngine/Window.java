@@ -252,10 +252,11 @@ public class Window {
 
         @Override
         public void invoke(long window, double xpos, double ypos) {
-            float xposf = Maths.clamp((float) xpos, -100.0f, 100.0f);
-            float yposf = Maths.clamp((float) ypos, -100.0f, 100.0f);
-
+            float xposf = (float) xpos;
+            float yposf = (float) ypos;
             Mouse.delta.set(xposf, yposf).sub(Mouse.position);
+            Mouse.delta.x = Maths.clamp(Mouse.delta.x, -100.0f, 100.0f);
+            Mouse.delta.y = Maths.clamp(Mouse.delta.y, -100.0f, 100.0f);
             Mouse.position.set(xposf, yposf);
         }
     }
