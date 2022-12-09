@@ -112,6 +112,13 @@ public class Window {
         // bindings available for use.
         GL.createCapabilities();
 
+        // Resize screen, patch for retina displays
+        int[] width = new int[1];
+        int[] height = new int[1];
+        glfwGetFramebufferSize(window, width, height);
+        glViewport(0, 0, width[0], height[0]);
+        size.set(width[0], height[0]);
+
         game.create();
     }
 

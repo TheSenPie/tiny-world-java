@@ -10,6 +10,7 @@ import am.aua.rendererEngine.Renderer;
 import am.aua.rendererEngine.Window;
 import am.aua.terrains.Terrain;
 import am.aua.textures.Texture;
+import am.aua.water.WaterFrameBuffers;
 import am.aua.water.WaterTile;
 import org.joml.Vector3f;
 
@@ -25,6 +26,7 @@ public class Game implements ApplicationListener {
     private Light light;
     private Terrain terrain;
     private WaterTile water;
+    private WaterFrameBuffers fbos;
 
     @Override
     public void create() {
@@ -43,11 +45,12 @@ public class Game implements ApplicationListener {
                 0, 0, loader,
                 new Texture(loader.loadTexture("water.png"))
         );
+        fbos = new WaterFrameBuffers();
     }
 
     @Override
     public void dispose() {
-
+        fbos.dispose();
     }
 
     @Override
@@ -62,10 +65,19 @@ public class Game implements ApplicationListener {
 
     @Override
     public void render() {
-        renderer.processWater(water);
+        fbos.bindReflectionFrameBuffer();
+        renderer.prepare();
         renderer.processTerrain(terrain);
-        // render entities after
+        // process entities
         renderer.render(light, camera);
+        fbos.unbindCurrentFrameBuffer();
+
+        renderer.processTerrain(terrain);
+        // process entities
+        renderer.processWater(water);
+        renderer.prepare();
+        renderer.render(light, camera);
+        renderer.renderWater(camera);
     }
 
     @Override

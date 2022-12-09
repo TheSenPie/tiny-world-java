@@ -11,6 +11,7 @@ import am.aua.terrains.Terrain;
 import am.aua.water.WaterTile;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL30;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,12 +51,6 @@ public class Renderer {
     }
 
     public void render(Light light, Camera camera) {
-        prepare();
-        waterShader.start();
-        waterShader.loadViewMatrix(camera);
-        waterShader.loadTextures();
-        waterRenderer.render(water);
-        waterShader.stop();
         shader.start();
         shader.loadLight(light);
         shader.loadViewMatrix(camera);
@@ -69,6 +64,14 @@ public class Renderer {
         terrainShader.stop();
         terrains.clear();
         entities.clear();
+    }
+
+    public void renderWater(Camera camera) {
+        waterShader.start();
+        waterShader.loadViewMatrix(camera);
+        waterShader.loadTextures();
+        waterRenderer.render(water);
+        waterShader.stop();
         water.clear();
     }
 
@@ -98,6 +101,7 @@ public class Renderer {
 
         GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, wireframe ? GL11.GL_LINE : GL11.GL_FILL);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
+        GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
 //        GL11.glCullFace(GL11.GL_BACK);
 //        GL11.glEnable(GL11.GL_BLEND);
     }
