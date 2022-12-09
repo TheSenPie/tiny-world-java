@@ -35,6 +35,15 @@ public class Loader {
         return new RawModel(vaoID,indices.length);
     }
 
+    public RawModel loadToVAO(float[] positions, float[] textureCoords, int[] indices) {
+        int vaoID = createVAO();
+        bindIndicesBuffer(indices);
+        storeDataInAttributeList(0,3,positions);
+        storeDataInAttributeList(1,2,textureCoords);
+        unbindVAO();
+        return new RawModel(vaoID,indices.length);
+    }
+
     public int loadTexture(String fileName) {
         stbi_set_flip_vertically_on_load(true);
 

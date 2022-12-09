@@ -6,7 +6,9 @@ import am.aua.models.Entity;
 import am.aua.models.TexturedModel;
 import am.aua.shaders.StaticShader;
 import am.aua.shaders.TerrainShader;
+import am.aua.shaders.WaterShader;
 import am.aua.terrains.Terrain;
+import am.aua.water.WaterTile;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
 
@@ -25,6 +27,9 @@ public class Renderer {
     private StaticShader shader = new StaticShader();
     private EntityRenderer renderer;
 
+    private WaterRenderer waterRenderer;
+    private WaterShader waterShader = new WaterShader();
+
     private TerrainRenderer terrainRenderer;
     private TerrainShader terrainShader = new TerrainShader();
 
@@ -33,17 +38,24 @@ public class Renderer {
     private List<Terrain> terrains = new ArrayList<Terrain>();
 
     private boolean wireframe = false;
+    private List<WaterTile> water = new ArrayList<>();
 
     public Renderer() {
 //        GL11.glEnable(GL11.GL_CULL_FACE);
 //        GL11.glCullFace(GL11.GL_BACK);
         createProjectionMatrix();
         renderer = new EntityRenderer(shader, projectionMatrix);
+        waterRenderer = new WaterRenderer(waterShader, projectionMatrix);
         terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
     }
 
     public void render(Light light, Camera camera) {
         prepare();
+        waterShader.start();
+        waterShader.loadViewMatrix(camera);
+        waterShader.loadTextures();
+        waterRenderer.render(water);
+        waterShader.stop();
         shader.start();
         shader.loadLight(light);
         shader.loadViewMatrix(camera);
@@ -57,10 +69,15 @@ public class Renderer {
         terrainShader.stop();
         terrains.clear();
         entities.clear();
+        water.clear();
     }
 
     public void processTerrain(Terrain terrain) {
         terrains.add(terrain);
+    }
+
+    public void processWater(WaterTile waterTile) {
+        water.add(waterTile);
     }
 
     public void processEntity(Entity entity) {

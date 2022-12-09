@@ -10,8 +10,8 @@ import am.aua.rendererEngine.Renderer;
 import am.aua.rendererEngine.Window;
 import am.aua.terrains.Terrain;
 import am.aua.textures.Texture;
+import am.aua.water.WaterTile;
 import org.joml.Vector3f;
-import org.lwjgl.glfw.GLFW;
 
 import static am.aua.rendererEngine.Window.Keyboard;
 import static am.aua.rendererEngine.Window.Mouse;
@@ -24,6 +24,7 @@ public class Game implements ApplicationListener {
 
     private Light light;
     private Terrain terrain;
+    private WaterTile water;
 
     @Override
     public void create() {
@@ -37,6 +38,10 @@ public class Game implements ApplicationListener {
                 0, 0, loader,
                 new Texture(loader.loadTexture("grass.png")),
                 new Texture(loader.loadTexture("height_map.png"))
+        );
+        water = new WaterTile(
+                0, 0, loader,
+                new Texture(loader.loadTexture("water.png"))
         );
     }
 
@@ -57,6 +62,7 @@ public class Game implements ApplicationListener {
 
     @Override
     public void render() {
+        renderer.processWater(water);
         renderer.processTerrain(terrain);
         // render entities after
         renderer.render(light, camera);
