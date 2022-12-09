@@ -4,6 +4,7 @@ import am.aua.entities.Camera;
 import am.aua.entities.Light;
 import am.aua.utils.Maths;
 import org.joml.Matrix4f;
+import org.joml.Vector4f;
 
 public class TerrainShader extends ShaderProgram{
 
@@ -19,6 +20,7 @@ public class TerrainShader extends ShaderProgram{
     private String location_specularStrength;
     private String location_texture1;
     private String location_texture2;
+    private String location_plane;
 
     public TerrainShader() {
         super(VERTEX_FILE, FRAGMENT_FILE);
@@ -42,6 +44,11 @@ public class TerrainShader extends ShaderProgram{
         location_specularStrength = "specularStrength";
         location_texture1 = "texture1";
         location_texture2 = "texture2";
+        location_plane = "plane";
+    }
+
+    public void loadCliplPlane(Vector4f plane) {
+        super.setVector4f(location_plane, plane);
     }
 
     public void loadShineVariables(float shininess, float specularStrength) {

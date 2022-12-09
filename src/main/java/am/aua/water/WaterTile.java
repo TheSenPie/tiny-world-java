@@ -13,8 +13,11 @@ public class WaterTile {
     private float z;
     private RawModel model;
     private Texture texture;
+    private float height;
 
     public WaterTile (int gridX, int gridZ, Loader loader, Texture texture){
+        height = 0;
+
         this.texture = texture;
         this.x = gridX * SIZE;
         this.z = gridZ * SIZE;
@@ -48,7 +51,7 @@ public class WaterTile {
             for (int j = 0; j  <= DIVISIONS; j++) { // i = n
                 float x, y, z;
                 x = (float) j / ((float) DIVISIONS - 1) * SIZE;
-                y = 0;
+                y = height;
                 z = (float) i / ((float) DIVISIONS - 1) * SIZE;
 
                 float u, v;
@@ -80,6 +83,10 @@ public class WaterTile {
             }
         }
         return loader.loadToVAO(vertices, textureCoords, indices);
+    }
+
+    public float getHeight() {
+        return height;
     }
 
 }

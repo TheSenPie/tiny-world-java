@@ -2,6 +2,7 @@ package am.aua.shaders;
 
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL20;
 
@@ -72,6 +73,10 @@ public abstract class ShaderProgram {
 
     protected void setVector3f(String name, Vector3f value) {
         GL20.glUniform3f(GL20.glGetUniformLocation(programID, name), value.x, value.y, value.z);
+    }
+
+    protected void setVector4f(String name, Vector4f value) {
+        GL20.glUniform4f(GL20.glGetUniformLocation(programID, name), value.x, value.y, value.z, value.y);
     }
 
     protected void bindAttribute(int attribute, String variableName) {

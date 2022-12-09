@@ -8,8 +8,10 @@ import am.aua.shaders.StaticShader;
 import am.aua.shaders.TerrainShader;
 import am.aua.shaders.WaterShader;
 import am.aua.terrains.Terrain;
+import am.aua.water.WaterFrameBuffers;
 import am.aua.water.WaterTile;
 import org.joml.Matrix4f;
+import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 
@@ -41,22 +43,25 @@ public class Renderer {
     private boolean wireframe = false;
     private List<WaterTile> water = new ArrayList<>();
 
-    public Renderer() {
+    public Renderer(WaterFrameBuffers fbos) {
 //        GL11.glEnable(GL11.GL_CULL_FACE);
 //        GL11.glCullFace(GL11.GL_BACK);
         createProjectionMatrix();
         renderer = new EntityRenderer(shader, projectionMatrix);
-        waterRenderer = new WaterRenderer(waterShader, projectionMatrix);
+        waterRenderer = new WaterRenderer(waterShader, projectionMatrix, fbos);
         terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
     }
 
-    public void render(Light light, Camera camera) {
+    public void render(Light light, Camera camera, Vector4f clipPlane) {
+        prepare();
         shader.start();
+        shader.loadCliplPlane(clipPlane);
         shader.loadLight(light);
         shader.loadViewMatrix(camera);
         renderer.render(entities);
         shader.stop();
         terrainShader.start();
+        terrainShader.loadCliplPlane(clipPlane);
         terrainShader.loadLight(light);
         terrainShader.loadViewMatrix(camera);
         terrainShader.loadTextures();
@@ -101,9 +106,9 @@ public class Renderer {
 
         GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, wireframe ? GL11.GL_LINE : GL11.GL_FILL);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
-        GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
-//        GL11.glCullFace(GL11.GL_BACK);
-//        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glCullFace(GL11.GL_BACK);
+        GL11.glEnable(GL11.GL_CULL_FACE);
+        GL11.glEnable(GL11.GL_BLEND);
     }
 
     private void createProjectionMatrix() {
@@ -121,9 +126,10 @@ public class Renderer {
         projectionMatrix.m33(0);
     }
 
-    public void cleanUp() {
+    public void dispose() {
         shader.dispose();
         terrainShader.dispose();
+        waterShader.dispose();
     }
 
     public boolean isWireframe() {

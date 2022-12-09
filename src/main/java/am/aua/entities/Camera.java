@@ -45,11 +45,6 @@ public class Camera {
                 pitch = 89.0f;
             if (pitch < -89.0f)
                 pitch = -89.0f;
-
-            front.x = (float) (Math.cos(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch)));
-            front.y = (float) Math.sin(Math.toRadians(pitch));
-            front.z = (float) (Math.sin(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch)));
-            front.normalize();
         }
 
         if (Keyboard.isKeyDown(GLFW.GLFW_KEY_W)) {
@@ -68,6 +63,9 @@ public class Camera {
 
     public void update () {
         // recalculate view matrix
+        front.x = (float) (Math.cos(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch)));
+        front.y = (float) Math.sin(Math.toRadians(pitch));
+        front.z = (float) (Math.sin(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch)));
         view.identity();
         view.lookAt(position, new Vector3f(position).add(front), up);
     }
@@ -86,5 +84,9 @@ public class Camera {
 
     public float getYaw() {
         return yaw;
+    }
+
+    public void invertPitch() {
+        this.pitch *= -1;
     }
 }

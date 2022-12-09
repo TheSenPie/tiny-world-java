@@ -4,6 +4,7 @@ import am.aua.models.RawModel;
 import am.aua.shaders.WaterShader;
 import am.aua.textures.Texture;
 import am.aua.utils.Maths;
+import am.aua.water.WaterFrameBuffers;
 import am.aua.water.WaterTile;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -16,10 +17,12 @@ import java.util.List;
 
 public class WaterRenderer {
 
+    private WaterFrameBuffers fbos;
     private WaterShader shader;
 
-    public WaterRenderer(WaterShader shader, Matrix4f projectionMatrix) {
+    public WaterRenderer(WaterShader shader, Matrix4f projectionMatrix, WaterFrameBuffers fbos) {
         this.shader = shader;
+        this.fbos = fbos;
         shader.start();
         shader.loadProjectionMatrix(projectionMatrix);
         shader.stop();
@@ -40,9 +43,10 @@ public class WaterRenderer {
         GL30.glBindVertexArray(rawModel.getVaoID());
         GL20.glEnableVertexAttribArray(0);
         GL20.glEnableVertexAttribArray(1);
-        Texture texture = waterTile.getTexture();
         GL13.glActiveTexture(GL13.GL_TEXTURE0);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.getID());
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, fbos.getReflectionTexture());
+        GL13.glActiveTexture(GL13.GL_TEXTURE1);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, fbos.getRefractionTexture());
     }
 
     private void unbindTexturedModel() {

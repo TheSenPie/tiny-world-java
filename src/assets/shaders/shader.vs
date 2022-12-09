@@ -14,10 +14,17 @@ uniform mat4 m;
 uniform mat4 v;
 uniform mat4 p;
 
+uniform vec4 plane;
+
 void main() {
     TexCoords = aTexCoords;
-    gl_Position = p * v * m * vec4(aPos, 1.0);
-    FragPos = vec3(v * m * vec4(aPos, 1.0));
+
+    vec4 worldPos = m * vec4(aPos, 1.0);
+    gl_Position = p * v * worldPos;
+    FragPos = vec3(v * worldPos);
+
+    gl_ClipDistance[0] = dot(worldPos, plane);
+
     Normal = mat3(transpose(inverse(v * m))) * aNormal;
     LightPos = vec3(v * vec4(lightPos, 1.0)); // Transform world-space light position to view-space light position
 }

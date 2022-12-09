@@ -4,6 +4,7 @@ import am.aua.entities.Camera;
 import am.aua.entities.Light;
 import am.aua.utils.Maths;
 import org.joml.Matrix4f;
+import org.joml.Vector4f;
 
 public class StaticShader extends ShaderProgram{
 
@@ -17,6 +18,7 @@ public class StaticShader extends ShaderProgram{
     private String location_lightColor;
     private String location_shininess;
     private String location_specularStrength;
+    private String location_plane;
 
     public StaticShader() {
         super(VERTEX_FILE, FRAGMENT_FILE);
@@ -38,6 +40,11 @@ public class StaticShader extends ShaderProgram{
         location_lightColor = "lightColor";
         location_shininess = "shininess";
         location_specularStrength = "specularStrength";
+        location_plane = "plane";
+    }
+
+    public void loadCliplPlane(Vector4f plane) {
+        super.setVector4f(location_plane, plane);
     }
 
     public void loadShineVariables(float shininess, float specularStrength) {
