@@ -7,8 +7,8 @@ import am.aua.textures.Texture;
 
 public class Terrain {
 
-    private static final float SIZE = 800;
-    private static final int VERTEX_COUNT = 128;
+    private static final float SIZE = 4;
+    private static final int DIVISIONS = 128;
 
     private float x;
     private float z;
@@ -39,38 +39,54 @@ public class Terrain {
     }
 
     private RawModel generateTerrain(Loader loader){
-        int count = VERTEX_COUNT * VERTEX_COUNT;
-        float[] vertices = new float[count * 3];
-        float[] normals = new float[count * 3];
-        float[] textureCoords = new float[count * 2];
-        int[] indices = new int[6 * (VERTEX_COUNT - 1) * (VERTEX_COUNT - 1)];
+        int vertices_size = (DIVISIONS + 1) * (DIVISIONS + 1);
+        int indices_size = DIVISIONS * (DIVISIONS + 1) * 2 + 2 * (DIVISIONS - 1);
+        float[] vertices = new float[vertices_size * 3];
+        float[] normals = new float[vertices_size * 3];
+        float[] textureCoords = new float[vertices_size * 2];
+        int[] indices = new int[indices_size];
         int vertexPointer = 0;
-        for (int i = 0; i < VERTEX_COUNT; i++) {
-            for (int j = 0; j < VERTEX_COUNT; j++) {
-                vertices[vertexPointer * 3] = (float) j / ((float) VERTEX_COUNT - 1) * SIZE;
-                vertices[vertexPointer * 3 + 1] = 0;
-                vertices[vertexPointer * 3 + 2] = (float) i / ((float) VERTEX_COUNT - 1) * SIZE;
-                normals[vertexPointer * 3] = 0;
-                normals[vertexPointer * 3 + 1] = 1;
-                normals[vertexPointer * 3 + 2] = 0;
-                textureCoords[vertexPointer * 2] = (float) j / ((float) VERTEX_COUNT - 1);
-                textureCoords[vertexPointer * 2 + 1] = (float) i / ((float) VERTEX_COUNT - 1);
+        for (int i = 0; i <= DIVISIONS; i++) { // j = s
+            for (int j = 0; j  <= DIVISIONS; j++) { // i = n
+                float x, y, z;
+                x = (float) j / ((float) DIVISIONS - 1) * SIZE;
+                y = 0;
+                z = (float) i / ((float) DIVISIONS - 1) * SIZE;
+
+                float n_x, n_y, n_z;
+                n_x = 0;
+                n_y = 1;
+                n_z = 0;
+
+                float u, v;
+                u = (float) j / ((float) DIVISIONS - 1);
+                v = (float) i / ((float) DIVISIONS - 1);
+
+                vertices[vertexPointer * 3] = x;
+                vertices[vertexPointer * 3 + 1] = y;
+                vertices[vertexPointer * 3 + 2] = z;
+                normals[vertexPointer * 3] = n_x;
+                normals[vertexPointer * 3 + 1] = n_y;
+                normals[vertexPointer * 3 + 2] = n_z;
+                textureCoords[vertexPointer * 2] = u;
+                textureCoords[vertexPointer * 2 + 1] = v;
+
                 vertexPointer++;
-            }
-        }
+        }}
+        // init the indices
         int pointer = 0;
-        for (int gz = 0; gz < VERTEX_COUNT - 1; gz++) {
-            for (int gx = 0; gx < VERTEX_COUNT - 1; gx++) {
-                int topLeft = (gz * VERTEX_COUNT) + gx;
-                int topRight = topLeft + 1;
-                int bottomLeft = ((gz + 1) * VERTEX_COUNT) + gx;
-                int bottomRight = bottomLeft + 1;
-                indices[pointer++] = topLeft;
-                indices[pointer++] = bottomLeft;
-                indices[pointer++] = topRight;
-                indices[pointer++] = topRight;
-                indices[pointer++] = bottomLeft;
-                indices[pointer++] = bottomRight;
+        for (int i = 0; i < DIVISIONS; i++) {
+            for (int j = 0; j <= DIVISIONS; j++) {
+                // quad
+                indices[pointer]         = i * (DIVISIONS + 1) + j;
+                indices[pointer + 1]     = (i + 1) * (DIVISIONS + 1) + j;
+                pointer += 2;
+            }
+            if (i + 1 < DIVISIONS) {
+                // add indices for degenrate triangles
+                indices[pointer] = (i + 1) * (DIVISIONS + 1) + (DIVISIONS - 1) + 1;
+                indices[pointer + 1] = (i + 1) * (DIVISIONS + 1);
+                pointer += 2;
             }
         }
         return loader.loadToVAO(vertices, textureCoords, normals, indices);
