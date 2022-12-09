@@ -192,6 +192,11 @@ public class Window {
         return size.y;
     }
 
+    // returns time since last frame in seconds
+    public static float getDelta() {
+        return frameDelta / (float) Time.NS_PER_SECOND;
+    }
+
     public static class Button {
         private boolean down;
         private boolean last;
@@ -244,6 +249,10 @@ public class Window {
 
         public boolean isKeyDown (int key) {
             return keys[key].down;
+        }
+
+        public boolean isPressed (int key) {
+            return keys[key].pressed;
         }
     }
 

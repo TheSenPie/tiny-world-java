@@ -171,16 +171,12 @@ public class Game implements ApplicationListener {
 
     @Override
     public void update() {
-        if (Keyboard.isKeyDown(GLFW_KEY_T)) {
+        if (Keyboard.isPressed(GLFW_KEY_T)) {
             renderer.setWireframe(!renderer.isWireframe());
         }
 
-        if (Mouse.isKeyDown(GLFW_MOUSE_BUTTON_LEFT)) {
-            camera.setYaw(camera.getYaw() + Mouse.getDelta().x * 0.1f);
-            camera.setPitch(camera.getPitch() + Mouse.getDelta().y * 0.1f);
-        }
-
         camera.move();
+        camera.update();
     }
 
     @Override
