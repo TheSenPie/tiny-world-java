@@ -52,6 +52,7 @@ public class Renderer {
         terrainShader.start();
         terrainShader.loadLight(light);
         terrainShader.loadViewMatrix(camera);
+        terrainShader.loadTextures();
         terrainRenderer.render(terrains);
         terrainShader.stop();
         terrains.clear();

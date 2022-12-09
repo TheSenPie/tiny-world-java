@@ -33,7 +33,11 @@ public class Game implements ApplicationListener {
 
         camera = new Camera();
         light = new Light(new Vector3f(0,10,0), new Vector3f(1,1,1));
-        terrain = new Terrain(0,0, loader, new Texture(loader.loadTexture("grass.png")));
+        terrain = new Terrain(
+                0, 0, loader,
+                new Texture(loader.loadTexture("grass.png")),
+                new Texture(loader.loadTexture("height_map.png"))
+        );
     }
 
     @Override

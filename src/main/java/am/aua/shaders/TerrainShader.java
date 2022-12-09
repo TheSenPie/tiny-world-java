@@ -17,6 +17,8 @@ public class TerrainShader extends ShaderProgram{
     private String location_lightColor;
     private String location_shininess;
     private String location_specularStrength;
+    private String location_texture1;
+    private String location_texture2;
 
     public TerrainShader() {
         super(VERTEX_FILE, FRAGMENT_FILE);
@@ -38,6 +40,8 @@ public class TerrainShader extends ShaderProgram{
         location_lightColor = "lightColor";
         location_shininess = "shininess";
         location_specularStrength = "specularStrength";
+        location_texture1 = "texture1";
+        location_texture2 = "texture2";
     }
 
     public void loadShineVariables(float shininess, float specularStrength) {
@@ -61,5 +65,10 @@ public class TerrainShader extends ShaderProgram{
 
     public void loadProjectionMatrix(Matrix4f projection) {
         super.setMatrix4f(location_projectionMatrix, projection);
+    }
+
+    public void loadTextures() {
+        super.setInt(location_texture1, 0);
+        super.setInt(location_texture2, 1);
     }
 }

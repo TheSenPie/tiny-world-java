@@ -14,9 +14,11 @@ public class Terrain {
     private float z;
     private RawModel model;
     private Texture texture;
+    private Texture heightMap;
 
-    public Terrain (int gridX, int gridZ, Loader loader, Texture texture){
+    public Terrain (int gridX, int gridZ, Loader loader, Texture texture, Texture heightMap){
         this.texture = texture;
+        this.heightMap = heightMap;
         this.x = gridX * SIZE;
         this.z = gridZ * SIZE;
         this.model = generateTerrain(loader);
@@ -92,4 +94,7 @@ public class Terrain {
         return loader.loadToVAO(vertices, textureCoords, normals, indices);
     }
 
+    public Texture getHeightMap() {
+        return heightMap;
+    }
 }
