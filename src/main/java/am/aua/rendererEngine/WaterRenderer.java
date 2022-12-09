@@ -16,9 +16,12 @@ import org.lwjgl.opengl.GL30;
 import java.util.List;
 
 public class WaterRenderer {
+    private static final float WAVE_SPEED = 0.06f;
 
     private WaterFrameBuffers fbos;
     private WaterShader shader;
+
+    private float displacementFactor = 0;
 
     public WaterRenderer(WaterShader shader, Matrix4f projectionMatrix, WaterFrameBuffers fbos) {
         this.shader = shader;
@@ -47,6 +50,10 @@ public class WaterRenderer {
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, fbos.getReflectionTexture());
         GL13.glActiveTexture(GL13.GL_TEXTURE1);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, fbos.getRefractionTexture());
+        GL13.glActiveTexture(GL13.GL_TEXTURE2);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, waterTile.getDUDV().getID());
+        GL13.glActiveTexture(GL13.GL_TEXTURE3);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, waterTile.getTexture().getID());
     }
 
     private void unbindTexturedModel() {
@@ -60,4 +67,12 @@ public class WaterRenderer {
         shader.loadTransformationMatrix(transformationMatrix);
     }
 
+    public void prepare() {
+        displacementFactor += WAVE_SPEED * Window.getDelta();
+        displacementFactor %= 1;
+    }
+
+    public float getDisplacementFactor() {
+        return displacementFactor;
+    }
 }

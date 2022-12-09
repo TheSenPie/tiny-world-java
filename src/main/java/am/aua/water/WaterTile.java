@@ -13,12 +13,14 @@ public class WaterTile {
     private float z;
     private RawModel model;
     private Texture texture;
+    private Texture dudv;
     private float height;
 
-    public WaterTile (int gridX, int gridZ, Loader loader, Texture texture){
+    public WaterTile (int gridX, int gridZ, Loader loader, Texture texture, Texture dudv){
         height = 0;
 
         this.texture = texture;
+        this.dudv = dudv;
         this.x = gridX * SIZE;
         this.z = gridZ * SIZE;
         this.model = generateWater(loader);
@@ -89,4 +91,7 @@ public class WaterTile {
         return height;
     }
 
+    public Texture getDUDV() {
+        return dudv;
+    }
 }

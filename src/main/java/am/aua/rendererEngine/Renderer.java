@@ -72,9 +72,11 @@ public class Renderer {
     }
 
     public void renderWater(Camera camera) {
+        waterRenderer.prepare();
         waterShader.start();
         waterShader.loadViewMatrix(camera);
         waterShader.loadTextures();
+        waterShader.loadDisplacementFactor(waterRenderer.getDisplacementFactor());
         waterRenderer.render(water);
         waterShader.stop();
         water.clear();

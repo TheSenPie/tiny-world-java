@@ -47,7 +47,8 @@ public class Game implements ApplicationListener {
         );
         water = new WaterTile(
                 0, 0, loader,
-                new Texture(loader.loadTexture("water.png"))
+                new Texture(loader.loadTexture("water.png")),
+                new Texture(loader.loadTexture("water_dudv.png"))
         );
     }
 
