@@ -10,6 +10,7 @@ import am.aua.rendererEngine.Renderer;
 import am.aua.rendererEngine.Window;
 import am.aua.terrains.Terrain;
 import am.aua.textures.Texture;
+import am.aua.utils.Triangle;
 import am.aua.water.WaterFrameBuffers;
 import am.aua.water.WaterTile;
 import org.joml.Vector3f;
@@ -19,6 +20,7 @@ import org.lwjgl.opengl.GL30;
 
 import static am.aua.rendererEngine.Window.Keyboard;
 import static am.aua.rendererEngine.Window.Mouse;
+import static am.aua.utils.Maths.ray_triangle_intersect;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class Game implements ApplicationListener {
@@ -67,9 +69,6 @@ public class Game implements ApplicationListener {
         camera.move();
         camera.update();
 
-        if (Mouse.isKeyDown(GLFW_MOUSE_BUTTON_LEFT)) {
-            System.out.println(Mouse.getPosition().x + " " + Mouse.getPosition().y);
-        }
     }
 
     @Override

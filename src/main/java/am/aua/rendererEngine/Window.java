@@ -25,6 +25,7 @@ public class Window {
     private static long window;
 
     private static Vector2i size;
+    private static Vector2i framebufferSize;
 
     private static ApplicationListener game;
     public static Mouse Mouse;
@@ -64,12 +65,14 @@ public class Window {
 
         // Create the window
         size = new Vector2i(SCREEN_WIDTH, SCREEN_HEIGHT);
+        framebufferSize = new Vector2i(SCREEN_WIDTH, SCREEN_HEIGHT);
         window = glfwCreateWindow(size.x, size.y, "Hello World!", NULL, NULL);
         if ( window == NULL )
             throw new RuntimeException("Failed to create the GLFW window");
 
         // configure callbacks
-        glfwSetFramebufferSizeCallback(window, new SizeCallback());
+        glfwSetFramebufferSizeCallback(window, new FramebufferSizeCallback());
+        glfwSetWindowSizeCallback(window, new WindowSizeCallback());
         glfwSetCursorPosCallback(window, new CursorCallback());
         // Setup a key and mouse callback. It will be called every time a key is pressed, repeated or released.
         glfwSetKeyCallback(window, new KeyCallback());
@@ -117,7 +120,7 @@ public class Window {
         int[] height = new int[1];
         glfwGetFramebufferSize(window, width, height);
         glViewport(0, 0, width[0], height[0]);
-        size.set(width[0], height[0]);
+        framebufferSize.set(width[0], height[0]);
 
         game.create();
     }
@@ -199,6 +202,14 @@ public class Window {
         return size.y;
     }
 
+    public static int getFramebufferWidth() {
+        return framebufferSize.x;
+    }
+
+    public static int getFramebufferHeight() {
+        return framebufferSize.y;
+    }
+
     // returns time since last frame in seconds
     public static float getDelta() {
         return frameDelta / (float) Time.NS_PER_SECOND;
@@ -276,10 +287,17 @@ public class Window {
             Mouse.position.set(xposf, yposf);
         }
     }
-    private static class SizeCallback implements GLFWFramebufferSizeCallbackI {
+    private static class FramebufferSizeCallback implements GLFWFramebufferSizeCallbackI {
         @Override
         public void invoke(long window, int width, int height) {
             glViewport(0, 0, width, height);
+            framebufferSize.set(width, height);
+        }
+    }
+
+    private static class WindowSizeCallback implements  GLFWWindowSizeCallbackI {
+        @Override
+        public void invoke(long window, int width, int height) {
             size.set(width, height);
             game.resize();
         }

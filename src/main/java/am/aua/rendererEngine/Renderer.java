@@ -11,6 +11,7 @@ import am.aua.terrains.Terrain;
 import am.aua.water.WaterFrameBuffers;
 import am.aua.water.WaterTile;
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
@@ -151,5 +152,24 @@ public class Renderer {
 
     public void setWireframe(boolean wireframe) {
         this.wireframe = wireframe;
+    }
+
+    public Vector3f constructRay (Camera camera, float x, float y) {
+//        float width = Window.getWidth();
+//        float height = Window.getHeight();
+//        float aspectRatio = width / height;
+//        float scale = (float) Math.tan(Math.toRadians(camera.getFov() * 0.5));
+//        float worldX = (2 * (x + 0.5f) / width - 1) * aspectRatio * scale;
+//        float worldY = (1 - 2 * (y + 0.5f) / height) * scale;
+//
+//        Vector3f ray = new Vector3f(worldX, worldY, -1);
+//        ray.normalize();
+
+        Matrix4f inverse = new Matrix4f();
+        projectionMatrix.invertPerspectiveView(camera.getView(), inverse);
+        Vector4f tmp = new Vector4f(x, y, 0, 1);
+        Vector3f ray = new Vector3f(tmp.x, tmp.y, tmp.z);
+        ray.normalize();
+        return ray;
     }
 }

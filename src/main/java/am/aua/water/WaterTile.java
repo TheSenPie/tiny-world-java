@@ -39,16 +39,16 @@ public class WaterTile {
         // trinagle 1
         Triangle triangle1 = new Triangle();
         Vector3f t1_v1 = new Vector3f(0, height, 0);
-        Vector3f t1_v2 = new Vector3f(0, height, SIZE);
-        Vector3f t1_v3 = new Vector3f(SIZE, height, SIZE);
+        Vector3f t1_v2 = new Vector3f(SIZE, height, SIZE);
+        Vector3f t1_v3 = new Vector3f(0, height, SIZE);
         triangle1.v1 = t1_v1;
         triangle1.v2 = t1_v2;
         triangle1.v3 = t1_v3;
         // triangle 2
         Triangle triangle2 = new Triangle();
         Vector3f t2_v1 = new Vector3f(0, height, 0);
-        Vector3f t2_v2 = new Vector3f(SIZE, height, SIZE);
-        Vector3f t2_v3 = new Vector3f(SIZE, height, 0);
+        Vector3f t2_v2 = new Vector3f(SIZE, height, 0);
+        Vector3f t2_v3 = new Vector3f(SIZE, height, SIZE);
         triangle2.v1 = t2_v1;
         triangle2.v2 = t2_v2;
         triangle2.v3 = t2_v3;

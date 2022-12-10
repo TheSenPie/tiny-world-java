@@ -48,7 +48,7 @@ public class WaterFrameBuffers {
 
     public void unbindCurrentFrameBuffer() {
         GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, 0);
-        GL11.glViewport(0, 0, Window.getWidth(), Window.getHeight());
+        GL11.glViewport(0, 0, Window.getFramebufferWidth(), Window.getFramebufferHeight());
     }
 
     public int getReflectionTexture() {
