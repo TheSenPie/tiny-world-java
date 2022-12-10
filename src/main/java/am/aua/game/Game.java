@@ -36,9 +36,9 @@ public class Game implements ApplicationListener {
         Loader loader = new Loader();
 
         fbos = new WaterFrameBuffers();
-        renderer = new Renderer(fbos);
 
         camera = new Camera();
+        renderer = new Renderer(fbos, camera);
         light = new Light(new Vector3f(0,10,0), new Vector3f(1,1,1));
         terrain = new Terrain(
                 0, 0, loader,
@@ -66,6 +66,10 @@ public class Game implements ApplicationListener {
 
         camera.move();
         camera.update();
+
+        if (Mouse.isKeyDown(GLFW_MOUSE_BUTTON_LEFT)) {
+            System.out.println(Mouse.getPosition().x + " " + Mouse.getPosition().y);
+        }
     }
 
     @Override
@@ -104,7 +108,7 @@ public class Game implements ApplicationListener {
 
     @Override
     public void resize() {
-
+        renderer.resize(camera);
     }
 
     @Override

@@ -89,4 +89,8 @@ public class Camera {
     public void invertPitch() {
         this.pitch *= -1;
     }
+
+    public float getFov() {
+        return fov;
+    }
 }

@@ -3,6 +3,10 @@ package am.aua.water;
 import am.aua.models.RawModel;
 import am.aua.rendererEngine.Loader;
 import am.aua.textures.Texture;
+import am.aua.utils.Triangle;
+import org.joml.Vector3f;
+
+import java.util.ArrayList;
 
 public class WaterTile {
 
@@ -16,6 +20,8 @@ public class WaterTile {
     private Texture dudv;
     private float height;
 
+    private ArrayList<Triangle> collider;
+
     public WaterTile (int gridX, int gridZ, Loader loader, Texture texture, Texture dudv){
         height = 0;
 
@@ -24,6 +30,31 @@ public class WaterTile {
         this.x = gridX * SIZE;
         this.z = gridZ * SIZE;
         this.model = generateWater(loader);
+        this.collider = new ArrayList<>();
+        makeCollider();
+    }
+
+    private void makeCollider () {
+        collider.clear();
+        // trinagle 1
+        Triangle triangle1 = new Triangle();
+        Vector3f t1_v1 = new Vector3f(0, height, 0);
+        Vector3f t1_v2 = new Vector3f(0, height, SIZE);
+        Vector3f t1_v3 = new Vector3f(SIZE, height, SIZE);
+        triangle1.v1 = t1_v1;
+        triangle1.v2 = t1_v2;
+        triangle1.v3 = t1_v3;
+        // triangle 2
+        Triangle triangle2 = new Triangle();
+        Vector3f t2_v1 = new Vector3f(0, height, 0);
+        Vector3f t2_v2 = new Vector3f(SIZE, height, SIZE);
+        Vector3f t2_v3 = new Vector3f(SIZE, height, 0);
+        triangle2.v1 = t2_v1;
+        triangle2.v2 = t2_v2;
+        triangle2.v3 = t2_v3;
+
+        collider.add(triangle1);
+        collider.add(triangle2);
     }
 
     public float getX() {
@@ -93,5 +124,9 @@ public class WaterTile {
 
     public Texture getDUDV() {
         return dudv;
+    }
+
+    public ArrayList<Triangle> getCollider () {
+        return collider;
     }
 }

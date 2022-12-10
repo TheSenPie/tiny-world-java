@@ -43,10 +43,8 @@ public class Renderer {
     private boolean wireframe = false;
     private List<WaterTile> water = new ArrayList<>();
 
-    public Renderer(WaterFrameBuffers fbos) {
-//        GL11.glEnable(GL11.GL_CULL_FACE);
-//        GL11.glCullFace(GL11.GL_BACK);
-        createProjectionMatrix();
+    public Renderer(WaterFrameBuffers fbos, Camera camera) {
+        createProjectionMatrix(camera);
         renderer = new EntityRenderer(shader, projectionMatrix);
         waterRenderer = new WaterRenderer(waterShader, projectionMatrix, fbos);
         terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
@@ -113,19 +111,32 @@ public class Renderer {
         GL11.glEnable(GL11.GL_BLEND);
     }
 
-    private void createProjectionMatrix() {
-        float aspectRatio = Window.getWidth() / Window.getHeight();
-        float y_scale = (float) ((1f / Math.tan(Math.toRadians(FOV / 2f))) * aspectRatio);
-        float x_scale = y_scale / aspectRatio;
-        float frustum_length = FAR_PLANE - NEAR_PLANE;
-
+    private void createProjectionMatrix(Camera camera) {
         projectionMatrix = new Matrix4f();
-        projectionMatrix.m00(x_scale);
-        projectionMatrix.m11(y_scale);
-        projectionMatrix.m22(-((FAR_PLANE + NEAR_PLANE) / frustum_length));
-        projectionMatrix.m23(-1);
-        projectionMatrix.m32(-((2 * NEAR_PLANE * FAR_PLANE) / frustum_length));
-        projectionMatrix.m33(0);
+        projectionMatrix.perspective(
+                camera.getFov(),
+                Window.getWidth() / (float) Window.getHeight(),
+                NEAR_PLANE, FAR_PLANE
+        );
+    }
+
+    public void resize(Camera camera) {
+        projectionMatrix.identity();
+        projectionMatrix.perspective(
+                camera.getFov(),
+                Window.getWidth() / (float) Window.getHeight(),
+                NEAR_PLANE, FAR_PLANE
+        );
+
+        shader.start();
+        shader.loadProjectionMatrix(projectionMatrix);
+        shader.stop();
+        terrainShader.start();
+        terrainShader.loadProjectionMatrix(projectionMatrix);
+        terrainShader.stop();
+        waterShader.start();
+        waterShader.loadProjectionMatrix(projectionMatrix);
+        waterShader.stop();
     }
 
     public void dispose() {

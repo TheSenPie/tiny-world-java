@@ -191,11 +191,11 @@ public class Window {
         return glfwGetInputMode(window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED;
     }
 
-    public static float getWidth() {
+    public static int getWidth() {
         return size.x;
     }
 
-    public static float getHeight() {
+    public static int getHeight() {
         return size.y;
     }
 
@@ -281,6 +281,7 @@ public class Window {
         public void invoke(long window, int width, int height) {
             glViewport(0, 0, width, height);
             size.set(width, height);
+            game.resize();
         }
     }
 
