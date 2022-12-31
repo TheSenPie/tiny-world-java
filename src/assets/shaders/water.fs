@@ -4,6 +4,7 @@ out vec4 FragColor;
 in vec4 ClipSpace;
 in vec2 DUDVTexCoords;
 in vec2 TexCoords;
+in vec3 toCamera;
 
 uniform sampler2D reflectionTexture;
 uniform sampler2D refractionTexture;
@@ -33,6 +34,11 @@ void main()
 
 	vec4 reflectColor = texture(reflectionTexture, reflectTexCoords);
 	vec4 refractionColor = texture(refractionTexture, refractTexCoords);
-    FragColor = mix(reflectColor, refractionColor, 0.5);
+
+	vec3 viewVec = normalize(toCamera);
+	float refractiveFactor = dot(viewVec, vec3(0.0, 1.0, 0.0));
+	refractiveFactor = pow(refractiveFactor, 10);
+
+    FragColor = mix(reflectColor, refractionColor, refractiveFactor);
     FragColor = mix(FragColor, texture(waterTexture, vec2(TexCoords.x + displacementFactor, TexCoords.y )), 0.2);
 }

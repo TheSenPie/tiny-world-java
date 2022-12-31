@@ -16,7 +16,7 @@ import org.lwjgl.opengl.GL30;
 import java.util.List;
 
 public class WaterRenderer {
-    private static final float WAVE_SPEED = 0.06f;
+    private static final float WAVE_SPEED = 0.03f;
 
     private WaterFrameBuffers fbos;
     private WaterShader shader;

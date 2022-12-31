@@ -5,16 +5,20 @@ layout (location = 1) in vec2 aTexCoords;
 out vec4 ClipSpace;
 out vec2 TexCoords;
 out vec2 DUDVTexCoords;
+out vec3 toCamera;
 
 uniform mat4 m;
 uniform mat4 v;
 uniform mat4 p;
+uniform vec3 aCameraPos;
 
-const float tiling = 4.0;
+const float tiling = 3.0;
 
 void main() {
-	ClipSpace = p * v * m * vec4(aPos, 1.0);
+	vec4 worldPos = m * vec4(aPos, 1.0);
+	ClipSpace = p * v * worldPos;
     gl_Position = ClipSpace;
     TexCoords = aTexCoords * tiling;
     DUDVTexCoords = vec2(aPos.x / 2.0 + 0.5, aPos.z / 2.0 + 0.5) * tiling;
+    toCamera = aCameraPos - worldPos.xyz;
 }

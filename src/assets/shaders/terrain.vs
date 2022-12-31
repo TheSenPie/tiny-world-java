@@ -19,14 +19,14 @@ uniform mat4 p;
 uniform vec4 plane;
 
 void main() {
-	float height = (texture(texture2, aTexCoords).x - 0.5) * 1.2;
+	float height = (texture(texture2, aTexCoords).x) - 0.5;
 	vec3 shiftedPos = aPos + vec3(0, height , 0);
 
     TexCoords = aTexCoords;
     vec4 worldPos = m * vec4(shiftedPos, 1.0);
     gl_Position = p * v * worldPos;
     FragPos = vec3(v * worldPos);
-    gl_ClipDistance[0] = dot(worldPos, plane);
+    gl_ClipDistance[0] = 1;//dot(worldPos, plane);
     Normal = mat3(transpose(inverse(v * m))) * aNormal;
     LightPos = vec3(v * vec4(lightPos, 1.0)); // Transform world-space light position to view-space light position
 }

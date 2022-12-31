@@ -18,13 +18,10 @@ public class WaterTile {
     private RawModel model;
     private Texture texture;
     private Texture dudv;
-    private float height;
 
     private ArrayList<Triangle> collider;
 
     public WaterTile (int gridX, int gridZ, Loader loader, Texture texture, Texture dudv){
-        height = 0;
-
         this.texture = texture;
         this.dudv = dudv;
         this.x = gridX * SIZE;
@@ -38,17 +35,17 @@ public class WaterTile {
         collider.clear();
         // trinagle 1
         Triangle triangle1 = new Triangle();
-        Vector3f t1_v1 = new Vector3f(0, height, 0);
-        Vector3f t1_v2 = new Vector3f(SIZE, height, SIZE);
-        Vector3f t1_v3 = new Vector3f(0, height, SIZE);
+        Vector3f t1_v1 = new Vector3f(0, 0, 0);
+        Vector3f t1_v2 = new Vector3f(SIZE, 0, SIZE);
+        Vector3f t1_v3 = new Vector3f(0, 0, SIZE);
         triangle1.v1 = t1_v1;
         triangle1.v2 = t1_v2;
         triangle1.v3 = t1_v3;
         // triangle 2
         Triangle triangle2 = new Triangle();
-        Vector3f t2_v1 = new Vector3f(0, height, 0);
-        Vector3f t2_v2 = new Vector3f(SIZE, height, 0);
-        Vector3f t2_v3 = new Vector3f(SIZE, height, SIZE);
+        Vector3f t2_v1 = new Vector3f(0, 0, 0);
+        Vector3f t2_v2 = new Vector3f(SIZE, 0, 0);
+        Vector3f t2_v3 = new Vector3f(SIZE, 0, SIZE);
         triangle2.v1 = t2_v1;
         triangle2.v2 = t2_v2;
         triangle2.v3 = t2_v3;
@@ -84,7 +81,7 @@ public class WaterTile {
             for (int j = 0; j  <= DIVISIONS; j++) { // i = n
                 float x, y, z;
                 x = (float) j / ((float) DIVISIONS - 1) * SIZE;
-                y = height;
+                y = 0;
                 z = (float) i / ((float) DIVISIONS - 1) * SIZE;
 
                 float u, v;
@@ -116,10 +113,6 @@ public class WaterTile {
             }
         }
         return loader.loadToVAO(vertices, textureCoords, indices);
-    }
-
-    public float getHeight() {
-        return height;
     }
 
     public Texture getDUDV() {

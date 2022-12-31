@@ -93,4 +93,12 @@ public class Camera {
     public float getFov() {
         return fov;
     }
+
+    public void setPosition(float x, float y, float z) {
+        position.set(x, y, z);
+    }
+
+    public void setYaw(int angle) {
+        yaw = angle;
+    }
 }

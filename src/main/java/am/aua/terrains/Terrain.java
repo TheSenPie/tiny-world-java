@@ -11,6 +11,7 @@ public class Terrain {
     private static final int DIVISIONS = 128;
 
     private float x;
+    private float y;
     private float z;
     private RawModel model;
     private Texture texture;
@@ -20,12 +21,17 @@ public class Terrain {
         this.texture = texture;
         this.heightMap = heightMap;
         this.x = gridX * SIZE;
+        this.y = 0;
         this.z = gridZ * SIZE;
         this.model = generateTerrain(loader);
     }
 
     public float getX() {
         return x;
+    }
+
+    public float getY() {
+        return y;
     }
 
     public float getZ() {
