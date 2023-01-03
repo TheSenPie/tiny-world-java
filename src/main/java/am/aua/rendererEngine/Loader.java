@@ -45,13 +45,17 @@ public class Loader {
     }
 
     public int loadTexture(String fileName) {
+        return loadTexture(fileName, GL_REPEAT);
+    }
+
+    public int loadTexture(String fileName, int param) {
         stbi_set_flip_vertically_on_load(true);
 
         int texture = glGenTextures();
         glBindTexture(GL_TEXTURE_2D, texture); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
         // set the texture wrapping parameters
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, param);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, param);
         // set texture filtering parameters
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

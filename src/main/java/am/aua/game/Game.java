@@ -16,6 +16,7 @@ import org.lwjgl.opengl.GL30;
 
 import static am.aua.rendererEngine.Window.Keyboard;
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL12.GL_CLAMP_TO_EDGE;
 
 public class Game implements ApplicationListener {
     private Renderer renderer;
@@ -43,7 +44,7 @@ public class Game implements ApplicationListener {
         terrain = new Terrain(
                 0, 0, loader,
                 new Texture(loader.loadTexture("grass.png")),
-                new Texture(loader.loadTexture("height_map.png"))
+                new Texture(loader.loadTexture("height_map.png", GL_CLAMP_TO_EDGE))
         );
         water = new WaterTile(0, 0, loader);
     }
