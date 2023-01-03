@@ -37,7 +37,7 @@ void main()
 
 	vec3 viewVec = normalize(toCamera);
 	float refractiveFactor = dot(viewVec, vec3(0.0, 1.0, 0.0));
-	refractiveFactor = pow(refractiveFactor, 10);
+	refractiveFactor = pow(refractiveFactor, 2);
 
     FragColor = mix(reflectColor, refractionColor, refractiveFactor);
     FragColor = mix(FragColor, texture(waterTexture, vec2(TexCoords.x + displacementFactor, TexCoords.y )), 0.2);

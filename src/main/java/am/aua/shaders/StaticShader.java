@@ -43,7 +43,7 @@ public class StaticShader extends ShaderProgram{
         location_plane = "plane";
     }
 
-    public void loadCliplPlane(Vector4f plane) {
+    public void loadClipPlane(Vector4f plane) {
         super.setVector4f(location_plane, plane);
     }
 

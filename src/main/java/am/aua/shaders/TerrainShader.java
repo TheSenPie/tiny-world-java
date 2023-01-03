@@ -2,7 +2,6 @@ package am.aua.shaders;
 
 import am.aua.entities.Camera;
 import am.aua.entities.Light;
-import am.aua.utils.Maths;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
 
@@ -47,7 +46,7 @@ public class TerrainShader extends ShaderProgram{
         location_plane = "plane";
     }
 
-    public void loadCliplPlane(Vector4f plane) {
+    public void loadClipPlane(Vector4f plane) {
         super.setVector4f(location_plane, plane);
     }
 

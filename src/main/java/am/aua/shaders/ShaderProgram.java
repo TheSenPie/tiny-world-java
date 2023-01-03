@@ -76,7 +76,7 @@ public abstract class ShaderProgram {
     }
 
     protected void setVector4f(String name, Vector4f value) {
-        GL20.glUniform4f(GL20.glGetUniformLocation(programID, name), value.x, value.y, value.z, value.y);
+        GL20.glUniform4f(GL20.glGetUniformLocation(programID, name), value.x, value.y, value.z, value.w);
     }
 
     protected void bindAttribute(int attribute, String variableName) {
