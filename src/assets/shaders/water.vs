@@ -6,10 +6,13 @@ out vec4 ClipSpace;
 out vec2 TexCoords;
 out vec2 DUDVTexCoords;
 out vec3 toCamera;
+out vec3 fromLight;
 
 uniform mat4 m;
 uniform mat4 v;
 uniform mat4 p;
+uniform vec3 lightPos;
+
 uniform vec3 aCameraPos;
 
 const float tiling = 3.0;
@@ -21,4 +24,5 @@ void main() {
     TexCoords = aTexCoords * tiling;
     DUDVTexCoords = vec2(aPos.x / 2.0 + 0.5, aPos.z / 2.0 + 0.5) * tiling;
     toCamera = aCameraPos - worldPos.xyz;
+    fromLight = worldPos.xyz - lightPos;
 }

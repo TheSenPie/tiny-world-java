@@ -1,6 +1,7 @@
 package am.aua.shaders;
 
 import am.aua.entities.Camera;
+import am.aua.entities.Light;
 import org.joml.Matrix4f;
 
 public class WaterShader extends ShaderProgram {
@@ -15,8 +16,10 @@ public class WaterShader extends ShaderProgram {
     private String location_refractionTexture;
     private String location_dudvMap;
     private String location_displacementFactor;
-    private String locatoin_waterTexture;
     private String location_aCameraPos;
+    private String location_normalMap;
+    private String location_lightColor;
+    private String location_lightPosition;
 
     public WaterShader() {
         super(VERTEX_FILE, FRAGMENT_FILE);
@@ -36,8 +39,10 @@ public class WaterShader extends ShaderProgram {
         location_refractionTexture = "refractionTexture";
         location_dudvMap = "dudvMap";
         location_displacementFactor = "displacementFactor";
-        locatoin_waterTexture = "waterTexture";
         location_aCameraPos = "aCameraPos";
+        location_normalMap = "normalMap";
+        location_lightColor = "lightColor";
+        location_lightPosition = "lightPos";
     }
 
     public void loadProjectionMatrix(Matrix4f projection) {
@@ -59,7 +64,12 @@ public class WaterShader extends ShaderProgram {
         super.setInt(location_reflectionTexture, 0);
         super.setInt(location_refractionTexture, 1);
         super.setInt(location_dudvMap, 2);
-        super.setInt(locatoin_waterTexture, 3);
+        super.setInt(location_normalMap, 3);
+    }
+
+    public void loadLight(Light light) {
+        super.setVector3f(location_lightColor, light.getColor());
+        super.setVector3f(location_lightPosition, light.getPosition());
     }
 
     public void loadDisplacementFactor(float factor) {

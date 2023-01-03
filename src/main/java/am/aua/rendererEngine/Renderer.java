@@ -43,14 +43,14 @@ public class Renderer {
     private boolean wireframe = false;
     private List<WaterTile> water = new ArrayList<>();
 
-    public Renderer(WaterFrameBuffers fbos, Camera camera) {
+    public Renderer(Loader loader, WaterFrameBuffers fbos, Camera camera) {
         createProjectionMatrix(camera);
         renderer = new EntityRenderer(shader, projectionMatrix);
-        waterRenderer = new WaterRenderer(waterShader, projectionMatrix, fbos);
+        waterRenderer = new WaterRenderer(loader, waterShader, projectionMatrix, fbos);
         terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
     }
 
-    public void render(Light light, Camera camera, Vector4f clipPlane) {
+    public void render(Camera camera, Light light, Vector4f clipPlane) {
         prepare();
         shader.start();
         shader.loadClipPlane(clipPlane);
@@ -69,9 +69,10 @@ public class Renderer {
         entities.clear();
     }
 
-    public void renderWater(Camera camera) {
+    public void renderWater(Camera camera, Light light) {
         waterRenderer.prepare();
         waterShader.start();
+        waterShader.loadLight(light);
         waterShader.loadViewMatrix(camera);
         waterShader.loadTextures();
         waterShader.loadDisplacementFactor(waterRenderer.getDisplacementFactor());

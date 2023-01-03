@@ -2,7 +2,6 @@ package am.aua.water;
 
 import am.aua.models.RawModel;
 import am.aua.rendererEngine.Loader;
-import am.aua.textures.Texture;
 import am.aua.utils.Triangle;
 import org.joml.Vector3f;
 
@@ -16,14 +15,10 @@ public class WaterTile {
     private float x;
     private float z;
     private RawModel model;
-    private Texture texture;
-    private Texture dudv;
 
     private ArrayList<Triangle> collider;
 
-    public WaterTile (int gridX, int gridZ, Loader loader, Texture texture, Texture dudv){
-        this.texture = texture;
-        this.dudv = dudv;
+    public WaterTile (int gridX, int gridZ, Loader loader) {
         this.x = gridX * SIZE;
         this.z = gridZ * SIZE;
         this.model = generateWater(loader);
@@ -64,10 +59,6 @@ public class WaterTile {
 
     public RawModel getModel() {
         return model;
-    }
-
-    public Texture getTexture() {
-        return texture;
     }
 
     private RawModel generateWater(Loader loader){
@@ -113,10 +104,6 @@ public class WaterTile {
             }
         }
         return loader.loadToVAO(vertices, textureCoords, indices);
-    }
-
-    public Texture getDUDV() {
-        return dudv;
     }
 
     public ArrayList<Triangle> getCollider () {

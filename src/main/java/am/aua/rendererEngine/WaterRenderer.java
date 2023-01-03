@@ -16,6 +16,9 @@ import org.lwjgl.opengl.GL30;
 import java.util.List;
 
 public class WaterRenderer {
+    private static final String DUDV_MAP = "water_dudv.png";
+    private static final String NORMAL_MAP = "water_normal_map.png";
+
     private static final float WAVE_SPEED = 0.03f;
 
     private WaterFrameBuffers fbos;
@@ -23,9 +26,16 @@ public class WaterRenderer {
 
     private float displacementFactor = 0;
 
-    public WaterRenderer(WaterShader shader, Matrix4f projectionMatrix, WaterFrameBuffers fbos) {
+    private int dudvTexture;
+    private int normalTexture;
+
+    public WaterRenderer(Loader loader, WaterShader shader, Matrix4f projectionMatrix, WaterFrameBuffers fbos) {
         this.shader = shader;
         this.fbos = fbos;
+
+        dudvTexture = loader.loadTexture(DUDV_MAP);
+        normalTexture = loader.loadTexture(NORMAL_MAP);
+
         shader.start();
         shader.loadProjectionMatrix(projectionMatrix);
         shader.stop();
@@ -51,9 +61,9 @@ public class WaterRenderer {
         GL13.glActiveTexture(GL13.GL_TEXTURE1);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, fbos.getRefractionTexture());
         GL13.glActiveTexture(GL13.GL_TEXTURE2);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, waterTile.getDUDV().getID());
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, dudvTexture);
         GL13.glActiveTexture(GL13.GL_TEXTURE3);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, waterTile.getTexture().getID());
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, normalTexture);
     }
 
     private void unbindTexturedModel() {
