@@ -20,7 +20,7 @@ uniform vec4 plane;
 
 void main() {
 	float height = (texture(texture2, aTexCoords).x) - 0.5;
-	vec3 shiftedPos = aPos + vec3(0, height , 0);
+	vec3 shiftedPos = aPos + vec3(0, height, 0);
 
     TexCoords = aTexCoords;
     vec4 worldPos = m * vec4(shiftedPos, 1.0);

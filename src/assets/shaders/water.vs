@@ -15,7 +15,7 @@ uniform vec3 lightPos;
 
 uniform vec3 aCameraPos;
 
-const float tiling = 3.0;
+const float tiling = 4.0;
 
 void main() {
 	vec4 worldPos = m * vec4(aPos, 1.0);

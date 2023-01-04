@@ -20,6 +20,9 @@ public class WaterShader extends ShaderProgram {
     private String location_normalMap;
     private String location_lightColor;
     private String location_lightPosition;
+    private String location_depthMap;
+    private String location_nearPlane;
+    private String location_farPlane;
 
     public WaterShader() {
         super(VERTEX_FILE, FRAGMENT_FILE);
@@ -43,6 +46,9 @@ public class WaterShader extends ShaderProgram {
         location_normalMap = "normalMap";
         location_lightColor = "lightColor";
         location_lightPosition = "lightPos";
+        location_depthMap = "depthMap";
+        location_nearPlane = "nearPlane";
+        location_farPlane = "farPlane";
     }
 
     public void loadProjectionMatrix(Matrix4f projection) {
@@ -65,6 +71,12 @@ public class WaterShader extends ShaderProgram {
         super.setInt(location_refractionTexture, 1);
         super.setInt(location_dudvMap, 2);
         super.setInt(location_normalMap, 3);
+        super.setInt(location_depthMap, 4);
+    }
+
+    public void loadNearFarPlanes(float nearPlane, float farPlane) {
+        super.setFloat(location_nearPlane, nearPlane);
+        super.setFloat(location_farPlane, farPlane);
     }
 
     public void loadLight(Light light) {

@@ -22,8 +22,8 @@ import java.util.Map;
 
 public class Renderer {
     private static final float FOV = 70;
-    private static final float NEAR_PLANE = 0.1f;
-    private static final float FAR_PLANE = 1000;
+    static final float NEAR_PLANE = 0.1f;
+    static final float FAR_PLANE = 1000;
 
     private Matrix4f projectionMatrix;
 
@@ -109,8 +109,6 @@ public class Renderer {
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glCullFace(GL11.GL_BACK);
         GL11.glEnable(GL11.GL_CULL_FACE);
-//        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-//        GL11.glEnable(GL11.GL_BLEND);
     }
 
     private void createProjectionMatrix(Camera camera) {
