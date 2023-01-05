@@ -41,7 +41,7 @@ public class Game implements ApplicationListener {
         light = new Light(new Vector3f(0,10,0), new Vector3f(1,1,1));
         terrain = new Terrain(0, 0, loader);
         water = new WaterTile(0, 0, loader);
-        water.setY(0.14f);
+        water.setY(0.6f);
     }
 
     @Override

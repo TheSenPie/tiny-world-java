@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class WaterTile {
 
-    private static final float SIZE = 4;
+    private static final float SIZE = 16;
     private static final int DIVISIONS = 128;
 
     private float x;

@@ -9,7 +9,7 @@ import static org.lwjgl.opengl.GL12.GL_CLAMP_TO_EDGE;
 
 public class Terrain {
 
-    private static final float SIZE = 4;
+    private static final float SIZE = 16;
     private static final int DIVISIONS = 128;
 
     private float x;

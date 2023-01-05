@@ -18,7 +18,7 @@ public class Camera {
     private float pitch;
     private float yaw;
     private float fov;
-    private float speed = 2.5f;
+    private float speed = 10f;
     private float sensitivity = 0.1f;
 
     private Matrix4f view;
