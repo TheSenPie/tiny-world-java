@@ -5,6 +5,8 @@ import am.aua.models.RawModel;
 import am.aua.rendererEngine.Loader;
 import am.aua.textures.Texture;
 
+import static org.lwjgl.opengl.GL12.GL_CLAMP_TO_EDGE;
+
 public class Terrain {
 
     private static final float SIZE = 4;
@@ -15,11 +17,13 @@ public class Terrain {
     private float z;
     private RawModel model;
     private Texture texture;
+    private Texture textureRocky;
     private Texture heightMap;
 
-    public Terrain (int gridX, int gridZ, Loader loader, Texture texture, Texture heightMap){
-        this.texture = texture;
-        this.heightMap = heightMap;
+    public Terrain (int gridX, int gridZ, Loader loader){
+        this.texture = new Texture(loader.loadTexture("grass.png"));
+        this.textureRocky = new Texture(loader.loadTexture("grass_rocky.png"));
+        this.heightMap = new Texture(loader.loadTexture("height_map.png", GL_CLAMP_TO_EDGE));
         this.x = gridX * SIZE;
         this.y = 0;
         this.z = gridZ * SIZE;
@@ -44,6 +48,10 @@ public class Terrain {
 
     public Texture getTexture() {
         return texture;
+    }
+
+    public Texture getTextureRocky() {
+        return textureRocky;
     }
 
     private RawModel generateTerrain(Loader loader){

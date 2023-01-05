@@ -80,7 +80,7 @@ public class WaterRenderer {
     }
 
     private void loadModelMatrix(WaterTile waterTile) {
-        Matrix4f transformationMatrix = Maths.createModelMatrix(new Vector3f(waterTile.getX(), 0, waterTile.getZ()), 0, 0, 0, 1);
+        Matrix4f transformationMatrix = Maths.createModelMatrix(new Vector3f(waterTile.getX(), waterTile.getY(), waterTile.getZ()), 0, 0, 0, 1);
         shader.loadTransformationMatrix(transformationMatrix);
     }
 

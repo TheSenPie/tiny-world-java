@@ -13,6 +13,7 @@ public class WaterTile {
     private static final int DIVISIONS = 128;
 
     private float x;
+    private float y;
     private float z;
     private RawModel model;
 
@@ -20,6 +21,7 @@ public class WaterTile {
 
     public WaterTile (int gridX, int gridZ, Loader loader) {
         this.x = gridX * SIZE;
+        this.y = 0;
         this.z = gridZ * SIZE;
         this.model = generateWater(loader);
         this.collider = new ArrayList<>();
@@ -51,6 +53,10 @@ public class WaterTile {
 
     public float getX() {
         return x;
+    }
+
+    public float getY() {
+        return y;
     }
 
     public float getZ() {
@@ -109,4 +115,9 @@ public class WaterTile {
     public ArrayList<Triangle> getCollider () {
         return collider;
     }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
 }

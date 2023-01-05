@@ -17,8 +17,9 @@ public class TerrainShader extends ShaderProgram{
     private String location_lightColor;
     private String location_shininess;
     private String location_specularStrength;
-    private String location_texture1;
-    private String location_texture2;
+    private String location_texture_grass;
+    private String location_texture_grassRocky;
+    private String location_heightmap;
     private String location_plane;
 
     public TerrainShader() {
@@ -41,8 +42,9 @@ public class TerrainShader extends ShaderProgram{
         location_lightColor = "lightColor";
         location_shininess = "shininess";
         location_specularStrength = "specularStrength";
-        location_texture1 = "texture1";
-        location_texture2 = "texture2";
+        location_texture_grass = "grass";
+        location_texture_grassRocky = "grassRocky";
+        location_heightmap = "heightmap";
         location_plane = "plane";
     }
 
@@ -74,7 +76,8 @@ public class TerrainShader extends ShaderProgram{
     }
 
     public void loadTextures() {
-        super.setInt(location_texture1, 0);
-        super.setInt(location_texture2, 1);
+        super.setInt(location_texture_grass, 0);
+        super.setInt(location_texture_grassRocky, 1);
+        super.setInt(location_heightmap, 2);
     }
 }

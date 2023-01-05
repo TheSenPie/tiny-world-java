@@ -42,11 +42,14 @@ public class TerrainRenderer {
         GL20.glEnableVertexAttribArray(1);
         GL20.glEnableVertexAttribArray(2);
         Texture texture = terrain.getTexture();
+        Texture textureRocky = terrain.getTextureRocky();
         shader.loadShineVariables(texture.getShininess(), texture.getSpecularStrength());
         GL13.glActiveTexture(GL13.GL_TEXTURE0);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.getID());
-        Texture heightMap = terrain.getHeightMap();
         GL13.glActiveTexture(GL13.GL_TEXTURE1);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureRocky.getID());
+        Texture heightMap = terrain.getHeightMap();
+        GL13.glActiveTexture(GL13.GL_TEXTURE2);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, heightMap.getID());
     }
 
