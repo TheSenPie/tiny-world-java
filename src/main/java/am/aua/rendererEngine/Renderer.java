@@ -4,6 +4,7 @@ import am.aua.entities.Camera;
 import am.aua.entities.Light;
 import am.aua.models.Entity;
 import am.aua.models.TexturedModel;
+import am.aua.shaders.SkyboxShader;
 import am.aua.shaders.StaticShader;
 import am.aua.shaders.TerrainShader;
 import am.aua.shaders.WaterShader;
@@ -36,6 +37,9 @@ public class Renderer {
     private TerrainRenderer terrainRenderer;
     private TerrainShader terrainShader = new TerrainShader();
 
+    private SkyboxShader skyboxShader = new SkyboxShader();
+    private SkyboxRenderer skyboxRenderer;
+
 
     private Map<TexturedModel, List<Entity>> entities = new HashMap<TexturedModel, List<Entity>>();
     private List<Terrain> terrains = new ArrayList<Terrain>();
@@ -48,6 +52,7 @@ public class Renderer {
         renderer = new EntityRenderer(shader, projectionMatrix);
         waterRenderer = new WaterRenderer(loader, waterShader, projectionMatrix, fbos);
         terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
+        skyboxRenderer = new SkyboxRenderer(loader, skyboxShader, projectionMatrix);
     }
 
     public void render(Camera camera, Light light, Vector4f clipPlane) {
@@ -65,6 +70,7 @@ public class Renderer {
         terrainShader.loadTextures();
         terrainRenderer.render(terrains);
         terrainShader.stop();
+        skyboxRenderer.render(camera);
         terrains.clear();
         entities.clear();
     }
@@ -137,12 +143,16 @@ public class Renderer {
         waterShader.start();
         waterShader.loadProjectionMatrix(projectionMatrix);
         waterShader.stop();
+        skyboxShader.start();
+        skyboxShader.loadProjectionMatrix(projectionMatrix);
+        skyboxShader.stop();
     }
 
     public void dispose() {
         shader.dispose();
         terrainShader.dispose();
         waterShader.dispose();
+        skyboxShader.dispose();
     }
 
     public boolean isWireframe() {

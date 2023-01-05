@@ -14,9 +14,9 @@ public class Maths {
         Matrix4f matrix = new Matrix4f();
         matrix.identity();
         matrix.translate(translation);
-        matrix.rotate((float) Math.toRadians(rx), new Vector3f(1,0,0));
-        matrix.rotate((float) Math.toRadians(ry), new Vector3f(0,1,0));
-        matrix.rotate((float) Math.toRadians(rz), new Vector3f(0,0,1));
+        matrix.rotate((float) Math.toRadians(rx), 1,0,0);
+        matrix.rotate((float) Math.toRadians(ry), 0,1,0);
+        matrix.rotate((float) Math.toRadians(rz), 0,0,1);
         matrix.scale(new Vector3f(scale,scale,scale));
         return matrix;
     }

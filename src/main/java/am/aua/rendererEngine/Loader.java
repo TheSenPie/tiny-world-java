@@ -7,14 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import am.aua.models.RawModel;
+import am.aua.textures.TextureData;
 import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL15;
-import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GL30;
+import org.lwjgl.opengl.*;
 import org.lwjgl.system.MemoryStack;
 
+import static com.jogamp.opengl.GL.GL_CLAMP_TO_EDGE;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.GL_TEXTURE_WRAP_R;
+import static org.lwjgl.opengl.GL13.*;
 import static org.lwjgl.opengl.GL30.glGenerateMipmap;
 import static org.lwjgl.stb.STBImage.*;
 import static org.lwjgl.system.MemoryStack.stackPush;
@@ -42,6 +43,13 @@ public class Loader {
         storeDataInAttributeList(1,2,textureCoords);
         unbindVAO();
         return new RawModel(vaoID,indices.length);
+    }
+
+    public RawModel loadToVAO(float[] positions, int dimension) {
+        int vaoID = createVAO();
+        storeDataInAttributeList(0,3,positions);
+        unbindVAO();
+        return new RawModel(vaoID,positions.length / dimension);
     }
 
     public int loadTexture(String fileName) {
@@ -76,6 +84,51 @@ public class Loader {
         }
 
         return texture;
+    }
+
+    public int loadCubeMap (String[] textureFiles) {
+        int texture = glGenTextures();
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
+
+        for (int i = 0; i < textureFiles.length; i++) {
+            TextureData textureData = decodeTextureFile(textureFiles[i]);
+            glTexImage2D(
+                    GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+                    0, GL_RGB, textureData.getWidth(), textureData.getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, textureData.getBuffer()
+            );
+            textureData.dispose();
+        }
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+        textures.add(texture);
+        return texture;
+    }
+
+    private TextureData decodeTextureFile (String fileName) {
+        int width = 0;
+        int height = 0;
+        ByteBuffer buffer = null;
+
+        stbi_set_flip_vertically_on_load(false);
+        try (MemoryStack stack = stackPush()) {
+            IntBuffer w    = stack.mallocInt(1);
+            IntBuffer h    = stack.mallocInt(1);
+            IntBuffer nrChannels = stack.mallocInt(1);
+
+            ByteBuffer data = stbi_load("src/assets/images/" + fileName, w, h, nrChannels, 0);
+            if (data == null) {
+                System.out.println("Failed to load texture " + fileName);
+                System.exit(-1);
+            }
+            buffer = data;
+            width = w.get();
+            height = h.get();
+        }
+        return new TextureData(width, height, buffer);
     }
 
     public void dispose() {
