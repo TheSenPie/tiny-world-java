@@ -7,8 +7,8 @@ import org.joml.Vector4f;
 
 public class TerrainShader extends ShaderProgram{
 
-    private static final String VERTEX_FILE = "src/assets/shaders/terrain.vs";
-    private static final String FRAGMENT_FILE = "src/assets/shaders/terrain.fs";
+    private static final String VERTEX_FILE = "shaders/terrain.vs";
+    private static final String FRAGMENT_FILE = "shaders/terrain.fs";
 
     private String location_modelMatrix;
     private String location_viewMatrix;

@@ -8,8 +8,8 @@ import org.joml.Vector4f;
 
 public class StaticShader extends ShaderProgram{
 
-    private static final String VERTEX_FILE = "src/assets/shaders/shader.vs";
-    private static final String FRAGMENT_FILE = "src/assets/shaders/shader.fs";
+    private static final String VERTEX_FILE = "shaders/shader.vs";
+    private static final String FRAGMENT_FILE = "shaders/shader.fs";
 
     private String location_modelMatrix;
     private String location_viewMatrix;

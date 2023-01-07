@@ -49,3 +49,14 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+jar {
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+    archiveFileName = 'game.jar'
+    manifest {
+        attributes 'Main-Class': 'am.aua.game.Game'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}

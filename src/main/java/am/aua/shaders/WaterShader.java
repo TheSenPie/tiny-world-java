@@ -6,8 +6,8 @@ import org.joml.Matrix4f;
 
 public class WaterShader extends ShaderProgram {
 
-    private final static String VERTEX_FILE = "src/assets/shaders/water.vs";
-    private final static String FRAGMENT_FILE = "src/assets/shaders/water.fs";
+    private final static String VERTEX_FILE = "shaders/water.vs";
+    private final static String FRAGMENT_FILE = "shaders/water.fs";
 
     private String location_modelMatrix;
     private String location_viewMatrix;

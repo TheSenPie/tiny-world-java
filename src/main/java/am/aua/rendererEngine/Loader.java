@@ -72,7 +72,7 @@ public class Loader {
             IntBuffer h    = stack.mallocInt(1);
             IntBuffer nrChannels = stack.mallocInt(1);
 
-            ByteBuffer data = stbi_load("src/assets/images/" + fileName, w, h, nrChannels, 0);
+            ByteBuffer data = stbi_load("images/" + fileName, w, h, nrChannels, 0);
             if (data != null) {
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w.get(0), h.get(0), 0, GL_RGB, GL_UNSIGNED_BYTE, data);
                 glGenerateMipmap(GL_TEXTURE_2D);
@@ -118,7 +118,7 @@ public class Loader {
             IntBuffer h    = stack.mallocInt(1);
             IntBuffer nrChannels = stack.mallocInt(1);
 
-            ByteBuffer data = stbi_load("src/assets/images/" + fileName, w, h, nrChannels, 0);
+            ByteBuffer data = stbi_load("images/" + fileName, w, h, nrChannels, 0);
             if (data == null) {
                 System.out.println("Failed to load texture " + fileName);
                 System.exit(-1);

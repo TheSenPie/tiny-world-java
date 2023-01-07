@@ -6,8 +6,8 @@ import org.joml.Matrix4f;
 
 public class SkyboxShader extends ShaderProgram{
 
-    private static final String VERTEX_FILE = "src/assets/shaders/skybox.vs";
-    private static final String FRAGMENT_FILE = "src/assets/shaders/skybox.fs";
+    private static final String VERTEX_FILE = "shaders/skybox.vs";
+    private static final String FRAGMENT_FILE = "shaders/skybox.fs";
 
     private static final float ROTATE_SPEED = 1f;
 
