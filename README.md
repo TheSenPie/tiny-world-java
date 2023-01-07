@@ -14,7 +14,7 @@ Controls are: WASD and mouse for movement, press T to toggle wireframe mode.
 ## Preview
 Video [preview](https://youtu.be/hA-29bpJ4Bc).
 
-![java_phEOw4d2YN](https://user-images.githubusercontent.com/20699484/210153260-fcafa379-4344-4b72-ba82-7b90af03c05f.jpg)
+![java_6YrqPL9KJS](https://user-images.githubusercontent.com/20699484/211156030-a2cfa780-3aa9-44d3-8793-5c02d4987058.jpg)
 
 ## Run source code
 In case you want to run the project from source code follow these steps.
