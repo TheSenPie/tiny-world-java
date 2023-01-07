@@ -1,5 +1,5 @@
 # tiny-world-java
-Tiny World is a custom game engine created with Java and OpenGL for Computer Graphics class Fall 2022.
+Tiny World is a personal custom game engine created with Java and OpenGL for fun.
 
 ## Getting Started
 
